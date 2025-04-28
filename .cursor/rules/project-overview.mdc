@@ -17,5 +17,8 @@ This is a note-taking application that combines several productivity methodologi
 
 - Zero-cost deployment and operation
 - PostgreSQL database with Ecto for data persistence
+- Phoenix LiveView for dynamic user interfaces
+- Session-based in-memory data management
+- Comprehensive test coverage of business logic
 - Deployment on fly.io (free tier)
 - Built with Elixir/Phoenix

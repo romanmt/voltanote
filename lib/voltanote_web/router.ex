@@ -18,6 +18,11 @@ defmodule VoltanoteWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    # Notes LiveView Routes
+    live "/notes", NotesLive, :index
+    live "/notes/zettel/:zettel_id", NotesLive, :show_by_zettel
+    live "/notes/:id", NotesLive, :show
   end
 
   # Other scopes may use custom stacks.

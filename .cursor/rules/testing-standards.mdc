@@ -1,0 +1,84 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Testing Standards
+
+## Core Principles
+
+- All business logic must be thoroughly tested
+- Aim for high test coverage in core modules
+- Tests should be deterministic and independent
+- Write tests that are easy to maintain and understand
+
+## Test Organization
+
+- **Unit Tests**: Test individual functions and modules in isolation
+  - Focus on business logic in context modules
+  - Test all public functions in service modules
+  - Test happy paths and edge cases
+- **Integration Tests**: Test interaction between components
+  - Test database operations through Repo
+  - Test LiveView functionality
+- **End-to-End Tests**: Test complete user workflows
+
+## Testing Guidelines
+
+- Use descriptive test names that explain the behavior being tested
+- Follow the Arrange-Act-Assert pattern
+- Keep tests focused on a single behavior or feature
+- Use setup blocks for common test data preparation
+- Prefer explicit assertions over generic ones
+
+## Mock and Stub Strategy
+
+- Use mocks sparingly, prefer dependency injection
+- Mock external services and APIs
+- When using mocks, verify they're called with expected parameters
+- Use stubs for deterministic test data
+
+## Example Test
+
+```elixir
+defmodule Voltanote.NotesTest do
+  use Voltanote.DataCase
+  
+  alias Voltanote.Notes
+  alias Voltanote.Schema.Note
+  
+  describe "create_note/2" do
+    test "creates a note with valid data" do
+      user_id = 1
+      valid_attrs = %{title: "Test Note", content: "Content"}
+      
+      assert {:ok, %Note{} = note} = Notes.create_note(user_id, valid_attrs)
+      assert note.title == "Test Note"
+      assert note.content == "Content"
+      assert note.user_id == user_id
+      assert note.zettel_id != nil
+    end
+    
+    test "returns error with invalid data" do
+      user_id = 1
+      invalid_attrs = %{title: nil, content: nil}
+      
+      assert {:error, %Ecto.Changeset{}} = Notes.create_note(user_id, invalid_attrs)
+    end
+  end
+  
+  # Additional test cases...
+end
+```
+
+## Test Coverage Standards
+
+- Aim for 90%+ coverage of business logic
+- Ensure all error handling paths are tested
+- Write tests for regression cases
+
+## Test Performance
+
+- Keep unit tests fast (milliseconds)
+- Group slow tests (DB, API) separately
+- Use async: true for tests that don't share resources

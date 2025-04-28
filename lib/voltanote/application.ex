@@ -10,6 +10,11 @@ defmodule Voltanote.Application do
     children = [
       # Start the Ecto repository
       Voltanote.Repo,
+      # Start the registries for services and supervisors
+      {Registry, keys: :unique, name: Voltanote.ServiceRegistry},
+      {Registry, keys: :unique, name: Voltanote.SupervisorRegistry},
+      # Start the session supervisor
+      {Voltanote.Supervisors.SessionSupervisor, []},
       VoltanoteWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:voltanote, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Voltanote.PubSub},

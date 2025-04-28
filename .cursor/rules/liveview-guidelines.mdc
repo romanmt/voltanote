@@ -1,0 +1,56 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Phoenix LiveView Guidelines
+
+## Usage Principles
+
+- Use LiveView for all dynamic user interfaces
+- Minimize client-side JavaScript in favor of server-rendered interactivity
+- Leverage LiveView hooks only when necessary for browser-specific functionality
+
+## Component Structure
+
+- Create reusable LiveComponents for repeated UI elements
+- Use stateful LiveComponents for complex interactive elements
+- Follow naming conventions:
+  - Live routes/pages: `*Live` (e.g., `NotesLive`)
+  - Live components: `*Component` (e.g., `NoteComponent`)
+
+## Performance Considerations
+
+- Optimize LiveView payloads with `update/2` callbacks
+- Use `phx-update="append"` or `phx-update="prepend"` for large lists
+- Implement pagination for large data sets
+- Add `phx-throttle` and `phx-debounce` for user inputs
+
+## State Management
+
+- Keep LiveView state minimal and focused
+- Use temporary assigns for large collections: `@socket |> assign(:notes, []) |> temporary_assigns(notes: [])`
+- Consider PubSub for collaborative features and real-time updates
+
+## Implementation Example
+
+```elixir
+defmodule VoltanoteWeb.NotesLive do
+  use VoltanoteWeb, :live_view
+  alias Voltanote.Notes
+  
+  @impl true
+  def mount(_params, _session, socket) do
+    if connected?(socket) do
+      # Load notes when connected to avoid blocking page load
+      notes = Notes.list_notes(socket.assigns.current_user.id)
+      {:ok, assign(socket, notes: notes, loading: false)}
+    else
+      # Initial render with loading state
+      {:ok, assign(socket, notes: [], loading: true)}
+    end
+  end
+  
+  # Other lifecycle callbacks and event handlers...
+end
+```

@@ -1,0 +1,93 @@
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar / Notes List -->
+  <div class="w-64 bg-white border-r border-gray-200 overflow-auto">
+    <div class="p-4 border-b border-gray-200 flex justify-between items-center">
+      <h1 class="text-xl font-semibold text-gray-800">My Notes</h1>
+      <button phx-click="new_note" class="p-1 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+
+    <%= if @loading do %>
+      <div class="p-4 text-center text-gray-500">
+        <p>Loading notes...</p>
+      </div>
+    <% else %>
+      <ul class="divide-y divide-gray-200">
+        <%= if Enum.empty?(@notes) do %>
+          <li class="p-4 text-center text-gray-500">
+            <p>No notes yet. Create your first note!</p>
+          </li>
+        <% else %>
+          <%= for note <- @notes do %>
+            <li 
+              phx-click="select_note" 
+              phx-value-id={note.id} 
+              class={"p-3 cursor-pointer hover:bg-gray-50 #{if @selected_note && @selected_note.id == note.id, do: "bg-indigo-50", else: ""}"}>
+              <div class="font-medium text-gray-800 truncate"><%= note.title %></div>
+              <div class="text-sm text-gray-500 truncate"><%= note.zettel_id %></div>
+              <div class="text-xs text-gray-400 mt-1 truncate">
+                <%= if note.updated_at, do: Calendar.strftime(note.updated_at, "%B %d, %Y"), else: "New" %>
+              </div>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <%= if @selected_note do %>
+      <!-- Note Editor -->
+      <div class="flex-1 overflow-auto p-6">
+        <.form :let={f} for={%{}} phx-submit="save_note" class="space-y-4">
+          <div>
+            <.input field={f[:title]} value={@selected_note.title} placeholder="Title" type="text" class="w-full p-2 text-xl font-bold border-b border-gray-300 focus:outline-none focus:border-indigo-500" />
+          </div>
+          
+          <div>
+            <.input field={f[:content]} value={@selected_note.content} placeholder="Write your note here..." type="textarea" class="w-full p-2 h-96 border rounded focus:outline-none focus:ring-1 focus:ring-indigo-500" />
+          </div>
+          
+          <div class="flex justify-between pt-4">
+            <div>
+              <.button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                <%= if @selected_note.id, do: "Update Note", else: "Create Note" %>
+              </.button>
+              <.button type="button" phx-click="cancel" class="px-4 py-2 ml-2 border border-gray-300 rounded hover:bg-gray-100">
+                Cancel
+              </.button>
+            </div>
+            
+            <%= if @selected_note.id do %>
+              <.button type="button" phx-click="delete_note" phx-value-id={@selected_note.id} class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" data-confirm="Are you sure you want to delete this note?">
+                Delete
+              </.button>
+            <% end %>
+          </div>
+        </.form>
+      </div>
+    <% else %>
+      <!-- No Note Selected State -->
+      <div class="flex-1 flex items-center justify-center bg-gray-50">
+        <div class="text-center p-6 max-w-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <h3 class="mt-2 text-lg font-medium text-gray-900">No note selected</h3>
+          <p class="mt-1 text-sm text-gray-500">
+            Select a note from the sidebar or create a new one to get started.
+          </p>
+          <div class="mt-6">
+            <.button phx-click="new_note" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+              Create New Note
+            </.button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div> 

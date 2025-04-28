@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 # Technology Stack
 
@@ -13,6 +13,13 @@ alwaysApply: false
   - Migrations for database changes
   - Query composition for complex data retrieval
 
+## Frontend
+- **Phoenix LiveView**: Server-rendered dynamic UI
+  - Real-time user interactions without JavaScript
+  - LiveComponents for reusable UI elements
+  - Minimal client-side code
+- **TailwindCSS**: Utility-first CSS framework
+
 ## Deployment
 - **fly.io**: Cloud deployment platform (free tier)
 - **Docker**: Containerization for deployment
@@ -21,3 +28,4 @@ alwaysApply: false
 - Maintain zero cost by staying within free tier limits
 - Follow Elixir/Phoenix/Ecto best practices for maintainable code
 - Use appropriate database indexing and query optimization
+- Optimize LiveView for performance

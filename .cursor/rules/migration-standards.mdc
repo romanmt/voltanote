@@ -1,0 +1,38 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Database Migration Standards
+
+## Implementation Principles
+
+- All migrations must include explicit `up` and `down` functions instead of the combined `change` function
+- Down migrations must completely reverse the changes made in the up migration
+- Migrations must be idempotent when possible
+- Each migration should have a focused purpose (e.g., adding a table, adding columns)
+
+## Migration Example
+
+```elixir
+def up do
+  create table(:notes) do
+    add :title, :string
+    # other fields...
+    timestamps()
+  end
+  
+  create index(:notes, [:user_id])
+end
+
+def down do
+  drop index(:notes, [:user_id])
+  drop table(:notes)
+end
+```
+
+## Safety Considerations
+
+- Always test migrations both ways (up and down) in development before applying to production
+- Be careful with data migrations that could result in data loss
+- For destructive changes, implement a down function that restores as much as possible
