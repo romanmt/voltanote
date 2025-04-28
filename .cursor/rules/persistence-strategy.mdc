@@ -1,0 +1,37 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Data Persistence Strategy
+
+## In-Memory First with Async Persistence
+
+- Notes are primarily managed in memory for fast access
+- Database serves as durable storage with async write-back
+- Changes are accumulated and persisted periodically or on specific triggers
+
+## Data Flow
+
+1. **Service Startup**:
+   - Notes service loads user's notes from database into memory
+   - Complete working set is available in memory
+
+2. **During Operation**:
+   - All reads served directly from memory
+   - Updates modify in-memory state first
+   - Changes tracked for eventual persistence
+   - Periodic async flush to database (non-blocking)
+
+3. **Service Shutdown**:
+   - Detect termination signal
+   - Perform final synchronous write of pending changes
+   - Ensure all data is persisted before process exits
+
+## Implementation Considerations
+
+- Use ETS tables for efficient in-memory storage
+- Implement change tracking for incremental updates
+- Use a write-ahead log for crash recovery
+- Schedule periodic background persistence
+- Handle conflicts if same note modified from multiple sessions

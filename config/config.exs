@@ -10,8 +10,10 @@ import Config
 config :voltanote,
   generators: [timestamp_type: :utc_datetime]
 
-# Configures the endpoint
-config :voltanote, VoltanoteWeb.Endpoint,
+  config :voltanote, ecto_repos: [Voltanote.Repo]
+
+  # Configures the endpoint
+  config :voltanote, VoltanoteWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [

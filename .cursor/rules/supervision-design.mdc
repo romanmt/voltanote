@@ -1,0 +1,34 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Supervision Design
+
+## Session-based Services
+
+- **Notes Service**: Dynamically started and supervised per user session
+  - Started on demand when user accesses their notes
+  - Terminated when user session ends
+  - Each user gets their own dedicated Notes service process
+
+## Process Hierarchy
+
+- Main application supervisor
+  - DatabaseRepo supervisor (always running)
+  - SessionSupervisor (dynamic)
+    - UserSession processes (one per active user)
+      - NotesService processes (started on-demand)
+
+## Service Lifecycle
+
+1. User logs in or accesses notes
+2. System checks if a NotesService exists for the user
+3. If not, a new NotesService is dynamically started under the user's session supervisor
+4. When session terminates, all child processes are automatically terminated
+
+## Termination Strategy
+
+- Graceful shutdown with termination callbacks
+- Services should implement `terminate/2` callbacks to handle cleanup
+- Session supervisor uses `:one_for_one` strategy for independent user sessions

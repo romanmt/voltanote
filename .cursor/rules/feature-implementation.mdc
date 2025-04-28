@@ -6,27 +6,31 @@ alwaysApply: false
 # Feature Implementation Guidelines
 
 ## Zettelkasten Implementation
-- Notes stored as nodes in Neo4j
-- Bidirectional links as relationships between nodes
-- Backlinks tracked and displayed for each note
+- Notes stored as records in PostgreSQL for persistence
+- In-memory management for active sessions
+- Relationships handled through join tables or foreign keys
+- Backlinks queried and cached for performance
 - Unique identifiers for each note
 
 ## Org-style Syntax
 - Hierarchical document structure
 - Support for headings, lists, and basic formatting
 - Special syntax for tasks and metadata
+- Parser and renderer for org format
 
 ## GTD Task Management
 - Todo items with status tracking
 - Projects grouping related tasks
 - Contexts for task categorization
 - Next actions list
+- In-memory task state for fast filtering and updates
 
 ## Journal System
 - Chronological entries
 - Date-based organization
 - Easy daily entry creation
 - Linking to related notes
+- Cached recent entries for quick access
 
 ## Meeting Notes
 - Template-based structure
@@ -34,3 +38,15 @@ alwaysApply: false
 - Action item extraction
 - Integration with GTD system
 - Follow-up reminders
+
+## Database Schema Design
+- Normalized structure for core entities
+- Appropriate indexing for query performance
+- Ecto changesets for data validation
+- Migrations for schema evolution
+
+## Session Management
+- Dynamic service creation per user session
+- Memory caching of user notes
+- Efficient write-back to database
+- Graceful termination handling

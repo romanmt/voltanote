@@ -16,6 +16,6 @@ This is a note-taking application that combines several productivity methodologi
 ## Core Requirements
 
 - Zero-cost deployment and operation
-- Neo4j AuraDB (free tier) for graph-based data persistence
+- PostgreSQL database with Ecto for data persistence
 - Deployment on fly.io (free tier)
 - Built with Elixir/Phoenix

@@ -7,6 +7,15 @@ config :voltanote, VoltanoteWeb.Endpoint,
   secret_key_base: "+aSAIkH8JqrCtj7RYfayKa/P7L0MpouggbDTnqTYoPAYxOVs4NcH5zQcTCUiICHY",
   server: false
 
+# Configure your database
+config :voltanote, Voltanote.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "voltanote_test#{System.get_env("MIX_TEST_PARTITION")}",
+  pool: Ecto.Adapters.SQL.Sandbox,
+  pool_size: 10
+
 # In test we don't send emails
 config :voltanote, Voltanote.Mailer, adapter: Swoosh.Adapters.Test
 

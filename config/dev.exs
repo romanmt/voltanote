@@ -19,6 +19,16 @@ config :voltanote, VoltanoteWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:voltanote, ~w(--watch)]}
   ]
 
+# Configure your database
+config :voltanote, Voltanote.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "voltanote_dev",
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

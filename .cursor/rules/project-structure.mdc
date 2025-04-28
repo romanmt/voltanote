@@ -11,21 +11,35 @@ This is an Elixir/Phoenix application with the following key directories:
 
 - **/lib**: Main application code
   - **/lib/voltanote**: Core application modules
+    - **/lib/voltanote/schema**: Ecto schemas for database models
+    - **/lib/voltanote/repo.ex**: Ecto repository for database access
+    - **/lib/voltanote/services**: Service implementations
+      - **/lib/voltanote/services/notes**: Notes management services
+    - **/lib/voltanote/supervisors**: Supervision tree components
+      - **/lib/voltanote/supervisors/session_supervisor.ex**: Dynamic session supervision
   - **/lib/voltanote_web**: Web interface and controllers
 
 - **/config**: Application configuration files
   - Contains environment-specific configurations
+  - Database connection settings
 
 - **/assets**: Frontend assets
   - JavaScript, CSS, and other frontend resources
 
 - **/priv**: Private application data
-  - Database migrations
+  - **/priv/repo/migrations**: Database migrations
   - Static files
 
-## Neo4j Integration
+## Database Structure
 
-The application uses Neo4j AuraDB for storage. Key considerations:
-- Graph data model for interconnected notes
-- Optimized queries to stay within free tier limits
-- Connection management for the remote AuraDB instance
+The application uses PostgreSQL with Ecto for data modeling:
+- Structured schemas for notes, tasks, and relationships
+- Migrations for database versioning
+- Queries optimized for relational data
+- Context modules for business logic separation
+
+## Memory Management
+
+- In-memory state management via ETS tables
+- Async database persistence for durability
+- Session-specific service processes

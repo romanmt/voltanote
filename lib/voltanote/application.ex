@@ -8,6 +8,8 @@ defmodule Voltanote.Application do
   @impl true
   def start(_type, _args) do
     children = [
+      # Start the Ecto repository
+      Voltanote.Repo,
       VoltanoteWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:voltanote, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Voltanote.PubSub},
