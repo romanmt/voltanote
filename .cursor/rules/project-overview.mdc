@@ -3,3 +3,19 @@ description:
 globs:
 alwaysApply: false
 ---
+# Project Overview
+
+This is a note-taking application that combines several productivity methodologies:
+
+- **Zettelkasten**: A system of interconnected atomic notes with bidirectional linking
+- **Org-style syntax**: Structured document format with hierarchical organization
+- **GTD (Getting Things Done)**: Task management system for action items
+- **Journal functionality**: Chronological recording of thoughts and events
+- **Meeting notes system**: Specialized note-taking for meetings
+
+## Core Requirements
+
+- Zero-cost deployment and operation
+- Neo4j AuraDB (free tier) for graph-based data persistence
+- Deployment on fly.io (free tier)
+- Built with Elixir/Phoenix
