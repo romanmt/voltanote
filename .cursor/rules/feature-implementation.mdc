@@ -1,0 +1,36 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Feature Implementation Guidelines
+
+## Zettelkasten Implementation
+- Notes stored as nodes in Neo4j
+- Bidirectional links as relationships between nodes
+- Backlinks tracked and displayed for each note
+- Unique identifiers for each note
+
+## Org-style Syntax
+- Hierarchical document structure
+- Support for headings, lists, and basic formatting
+- Special syntax for tasks and metadata
+
+## GTD Task Management
+- Todo items with status tracking
+- Projects grouping related tasks
+- Contexts for task categorization
+- Next actions list
+
+## Journal System
+- Chronological entries
+- Date-based organization
+- Easy daily entry creation
+- Linking to related notes
+
+## Meeting Notes
+- Template-based structure
+- Attendee tracking
+- Action item extraction
+- Integration with GTD system
+- Follow-up reminders

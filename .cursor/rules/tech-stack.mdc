@@ -1,0 +1,21 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Technology Stack
+
+## Backend
+- **Elixir/Phoenix**: Primary application framework
+- **Neo4j AuraDB**: Graph database (free tier) for storing interconnected notes
+  - Leverages relationships between notes for Zettelkasten methodology
+  - Efficient querying of connected information
+
+## Deployment
+- **fly.io**: Cloud deployment platform (free tier)
+- **Docker**: Containerization for deployment
+
+## Development Considerations
+- Maintain zero cost by staying within free tier limits
+- Optimize database queries to stay within Neo4j AuraDB free tier limitations
+- Follow Elixir/Phoenix best practices for maintainable code

@@ -1,0 +1,31 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# Project Structure
+
+This is an Elixir/Phoenix application with the following key directories:
+
+## Phoenix Application Structure
+
+- **/lib**: Main application code
+  - **/lib/voltanote**: Core application modules
+  - **/lib/voltanote_web**: Web interface and controllers
+
+- **/config**: Application configuration files
+  - Contains environment-specific configurations
+
+- **/assets**: Frontend assets
+  - JavaScript, CSS, and other frontend resources
+
+- **/priv**: Private application data
+  - Database migrations
+  - Static files
+
+## Neo4j Integration
+
+The application uses Neo4j AuraDB for storage. Key considerations:
+- Graph data model for interconnected notes
+- Optimized queries to stay within free tier limits
+- Connection management for the remote AuraDB instance
